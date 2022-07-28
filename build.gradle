@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.project'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.8.2'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    //web app dependencies
+    implementation 'org.glassfish.jersey.bundles:jaxrs-ri:2.29.1'
+    implementation 'org.glassfish.jersey.core:jersey-server:2.29.1'
+    implementation 'org.glassfish.jersey.inject:jersey-hk2:2.29.1'
+    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:2.29.1'
+    implementation 'javax.json.bind:javax.json.bind-api:1.0'
+    implementation 'javax.json:javax.json-api:1.1.4'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    //areospike dependency
+    implementation "com.aerospike:aerospike-client:6.0.1"
+    implementation "com.aerospike:java-object-mapper:2.0.0"
+
+    implementation 'com.google.code.gson:gson:2.3.1'
+
+
+    //test dependencies
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
