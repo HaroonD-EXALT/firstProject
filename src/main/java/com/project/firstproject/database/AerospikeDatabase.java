@@ -63,7 +63,8 @@ public class AerospikeDatabase {
         long id = this.getNextId(stmt);
         System.out.println("Size: " + id);
         student.setId(id);
-        student.setRegCourses(Arrays.asList());
+        student.setRegCourses(student.getRegCourses());
+        student.setRole("student");
         mapper.save(student);
 //        Key key = new Key(NAMESPACE, "students", student.getId());
 //        Bin PK = new Bin("PK", student.getId());
@@ -131,6 +132,7 @@ public class AerospikeDatabase {
         long id = this.getNextId(stmt);
         System.out.println("Size: " + id);
         admin.setId(id);
+        admin.setRole("admin");
         Key key = new Key(NAMESPACE, "admins", admin.getId());
         Bin PK = new Bin("PK", admin.getId());
         Bin name = new Bin("name", admin.getName());

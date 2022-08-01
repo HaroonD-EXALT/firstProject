@@ -1,9 +1,7 @@
 package com.project.firstproject.resources;
 
-import com.project.firstproject.database.AerospikeDatabase;
 import com.project.firstproject.model.Admin;
 import com.project.firstproject.model.LoginModel;
-import com.project.firstproject.model.Student;
 import com.project.firstproject.services.AdminService;
 
 import javax.ws.rs.*;
@@ -18,7 +16,10 @@ import java.util.List;
 public class AdminResource {
     AdminService adminService = new AdminService();
 
-
+    @GET
+    public List<Admin> getAllAdmins (){
+        return adminService.getAllAdmins();
+    }
     @GET
     @Path("/{id}")
     public Admin getAdminById(@PathParam("id") long id) {
@@ -36,8 +37,8 @@ public class AdminResource {
     }
 
     @POST
-    public void addNewAdmin(Admin admin){
-        adminService.addAdmin(admin);
+    public Admin addNewAdmin(Admin admin){
+      return  adminService.addAdmin(admin);
     }
 
 }
