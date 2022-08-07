@@ -23,11 +23,47 @@ import java.util.stream.StreamSupport;
 public class AerospikeDatabase {
     private static AerospikeDatabase database;
     private static AerospikeClient aerospikeClient;
-    private static WritePolicy writePolicy;
+
     private static final String NAMESPACE = "test";
     private Statement stmt ;
 
     AeroMapper mapper ;
+
+    public static AerospikeClient getAerospikeClient() {
+        return aerospikeClient;
+    }
+
+    private static WritePolicy writePolicy;
+
+    public static void setWritePolicy(WritePolicy writePolicy) {
+        AerospikeDatabase.writePolicy = writePolicy;
+    }
+
+    public void setStmt(Statement stmt) {
+        this.stmt = stmt;
+    }
+
+    public void setMapper(AeroMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    public static WritePolicy getWritePolicy() {
+        return writePolicy;
+    }
+
+    public Statement getStmt() {
+        return stmt;
+    }
+
+    public String getNAMESPACE() {
+        return NAMESPACE;
+    }
+
+    public AeroMapper getMapper() {
+        return mapper;
+    }
+
+
 
     Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
 
@@ -125,82 +161,6 @@ public class AerospikeDatabase {
         return student;
     }
 
-
-    // admin method
-    public Admin insertAdmin(Admin admin) {
-        stmt.setSetName("admins");
-        long id = this.getNextId(stmt);
-        System.out.println("Size: " + id);
-        admin.setId(id);
-        admin.setRole("admin");
-        Key key = new Key(NAMESPACE, "admins", admin.getId());
-        Bin PK = new Bin("PK", admin.getId());
-        Bin name = new Bin("name", admin.getName());
-        Bin password = new Bin("password", admin.getPassword());
-        Bin role = new Bin("role", admin.getRole());
-        aerospikeClient.put(writePolicy, key, PK, name, password,role);
-        System.out.println("Admin Created");
-        return admin;
-    }
-
-    public List<Admin> getAllAdmins() {
-        stmt.setSetName("admins");
-        RecordSet rs = aerospikeClient.query(null, stmt);
-
-        List<Admin> adminList = StreamSupport.stream(rs.spliterator(), false).map( rec ->{
-            Map<String, Object> bins = rec.record.bins;
-//            aerospikeClient.delete(writePolicy,rec.key);
-            Admin admin = new Admin((Long) bins.get("PK"), (String) bins.get("name"));
-//            System.err.println(stu);
-            return admin;
-        }).collect(Collectors.toList());
-//        System.out.println(stuList.toString());
-        return adminList;
-    }
-
-    public Admin getAdminById(long id) {
-        try{
-            Key key = new Key(NAMESPACE,"admins",id);
-            Record record = aerospikeClient.get(null,key);
-            System.out.println(record.bins.get("PK"));
-            Admin admin = new Admin((Long) record.bins.get("PK"), (String) record.bins.get("name"),(String) record.bins.get("password"));
-            System.out.println(admin);
-            return admin;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public void del(){
-
-        stmt.setSetName("admins");
-        RecordSet rs = aerospikeClient.query(null, stmt);
-
-        List<Admin> studentList = StreamSupport.stream(rs.spliterator(), false).map( rec ->{
-            Map<String, Object> bins = rec.record.bins;
-            aerospikeClient.delete(writePolicy,rec.key);
-            Admin stu = new Admin((Long) bins.get("PK"), (String) bins.get("name"));
-            return stu;
-        }).collect(Collectors.toList());
-
-    }
-    public Admin getAdminByName(String username) {
-
-        stmt.setSetName("admins");
-        RecordSet rs = aerospikeClient.query(null, stmt);
-
-        Optional<KeyRecord> admOptional = StreamSupport.stream(rs.spliterator(), true).parallel().filter(
-                rec -> username.equals((String) (rec.record.bins.get("name"))))
-                .findFirst();
-
-        System.out.println(admOptional.get());
-        if (admOptional.isPresent()){
-            Map<String, Object> adminRec = admOptional.get().record.bins;
-            Admin admin = new Admin((Long) adminRec.get("PK"), (String) adminRec.get("name"), (String) adminRec.get("password"));
-            return  admin;
-        }
-        return  null;
-    }
 
 
     //Courses **************

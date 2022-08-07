@@ -1,43 +1,57 @@
 package com.project.firstproject.model;
 
+import com.aerospike.mapper.annotations.AerospikeBin;
 import com.aerospike.mapper.annotations.AerospikeKey;
 import com.aerospike.mapper.annotations.AerospikeRecord;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import org.springframework.context.annotation.ComponentScan;
 
+
+import javax.validation.Constraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.UUID;
 
-@XmlRootElement
+@ComponentScan
 @AerospikeRecord(namespace="test", set="admins")
 public class Admin{
     @AerospikeKey
-    private long id;
+    @AerospikeBin(name = "PK")
+    private UUID id;
+    @NotNull(message = "name is required, must not be null")
+    @NotEmpty(message = "name is required, must not be empty")
+    @NotBlank(message = "name is required, must not be blank")
     private String name;
-
-
     private String role;
-
+    @NotNull(message = "password is required, must not be null")
+    @NotEmpty(message = "password is required, must not be empty")
+    @NotBlank(message = "password is required, must not be blank")
     private String password;
 
     public Admin() {
     }
 
-    public Admin(long id, String name, String password) {
+    public Admin(UUID id, String name, String password) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.role = "admin";
     }
 
-    public Admin(long id, String name) {
+    public Admin(UUID id, String name) {
         this.id = id;
         this.name = name;
         this.role = "admin";
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

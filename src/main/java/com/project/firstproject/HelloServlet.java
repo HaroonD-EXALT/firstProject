@@ -30,7 +30,7 @@ public class HelloServlet extends HttpServlet {
 
 //        database.creatNewAdmin(new Admin(0,"Hadi","1234"));
 //        database.getAllStudent();
-        database.del();
+//        database.del();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
