@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,8 +23,19 @@ public class AdminResource {
     AdminService adminService = new AdminService();
 
     @GetMapping
-    public List<Admin> getAllAdmins (){
-        return adminService.getAllAdmins();
+    public ResponseEntity<Object> getAllAdmins (){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(adminService.getAllAdmins());
+
+        }catch (AerospikeException ae){
+            System.err.println(ae.getMessage());
+            ae.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error!");
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later ");
+        }
     }
 
     @GetMapping("/{id}")

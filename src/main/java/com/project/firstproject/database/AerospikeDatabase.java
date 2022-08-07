@@ -67,9 +67,6 @@ public class AerospikeDatabase {
 
     Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
 
-    String toJsonString(Object object) {
-        return gson.toJson(object).toString();
-    }
 
     private AerospikeDatabase() {
         aerospikeClient = new AerospikeClient("localhost", 3000);
@@ -164,52 +161,9 @@ public class AerospikeDatabase {
 
 
     //Courses **************
-    public  List<Course>  getAllCourses() {
 
-        List<Course> courseList = mapper.scan(Course.class);
-//        stmt.setSetName("courses");
-//        RecordSet rs = aerospikeClient.query(null, stmt);
-//
-//        List<Course> courseList = StreamSupport.stream(rs.spliterator(), false).map( rec ->{
-//            Map<String, Object> bins = rec.record.bins;
-////            aerospikeClient.delete(writePolicy,rec.key);
-//            Course course = new Course((Long) bins.get("PK"), (String) bins.get("name"));
-////            System.err.println(stu);
-//            return course;
-//        }).collect(Collectors.toList());
-//        System.out.println(stuList.toString());
-        return courseList;
-    }
 
-    public Course insertCourse(Course course) {
 
-        stmt.setSetName("courses");
-        long id = this.getNextId(stmt);
-        System.out.println("Size: " + id);
-        course.setId(id);
-        mapper.save(course);
-//        Key key = new Key(NAMESPACE, "courses", course.getId());
-//        Bin PK = new Bin("PK", course.getId());
-//        Bin name = new Bin("name", course.getName());
-//        aerospikeClient.put(writePolicy, key, PK, name);
-        System.out.println("Course Created!");
-        return course;
-    }
-
-    public Course getCourseById(long id){
-        try{
-           Course course= mapper.read(Course.class,id);
-//            Key key = new Key(NAMESPACE,"courses",id);
-//            Record record = aerospikeClient.get(null,key);
-//            System.out.println(record.bins.get("PK"));
-//            Course course = new Course((Long) record.bins.get("PK"), (String) record.bins.get("name"));
-            System.out.println(course);
-            return course;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public Student registerCourse(long stuId, long courseId) {
         Student student = mapper.read(Student.class,stuId);
@@ -236,9 +190,5 @@ public class AerospikeDatabase {
         return student;
     }
 
-    public void removeCourse(long id) {
-        Course course = mapper.read(Course.class,id);
-        mapper.delete(course);
-        System.out.println("Course removed !");
-    }
+
 }

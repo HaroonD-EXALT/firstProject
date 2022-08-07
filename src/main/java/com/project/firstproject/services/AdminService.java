@@ -25,7 +25,7 @@ public class AdminService {
         database = AerospikeDatabase.getInstance();
     }
 
-    public List<Admin> getAllAdmins() {
+    public List<Admin> getAllAdmins() throws AerospikeException{
         database.getStmt().setSetName("admins");
         RecordSet rs = database.getAerospikeClient().query(null, database.getStmt());
         List<Admin> adminList = StreamSupport.stream(rs.spliterator(), false).map(rec -> {

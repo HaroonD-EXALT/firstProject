@@ -1,15 +1,25 @@
 package com.project.firstproject.model;
 
+import com.aerospike.mapper.annotations.AerospikeBin;
 import com.aerospike.mapper.annotations.AerospikeKey;
 import com.aerospike.mapper.annotations.AerospikeRecord;
+import org.springframework.context.annotation.ComponentScan;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@ComponentScan
 @AerospikeRecord(namespace = "test", set = "courses")
 public class Course {
     @AerospikeKey
+    @AerospikeBin(name = "PK")
     private long id;
+
+    @NotNull(message = "name is required, must not be null")
+    @NotEmpty(message = "name is required, must not be empty")
+    @NotBlank(message = "name is required, must not be blank")
     private String name;
 
     private int numOfStudent;
