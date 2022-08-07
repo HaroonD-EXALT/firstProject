@@ -1,9 +1,6 @@
 package com.project.firstproject;
 
-import com.aerospike.client.AerospikeClient;
 import com.project.firstproject.database.AerospikeDatabase;
-import com.project.firstproject.model.Admin;
-import com.project.firstproject.model.Student;
 
 import java.io.*;
 import javax.servlet.http.*;
