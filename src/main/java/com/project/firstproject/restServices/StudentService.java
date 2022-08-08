@@ -80,13 +80,14 @@ public class StudentService implements IStudentService {
         if (course == null) {
             throw new Exception("Course dose not exists!");
         }
-        student.addNewCourse(course);
-        if (student.isCourseRegistered(course)) {
+        if (!student.isCourseRegistered(course)) {
+            student.addNewCourse(course);
             course.incrementNumOfStu();
             database.getMapper().save(course);
+            database.getMapper().save(student);
+            System.out.println("course registered !");
         }
-        database.getMapper().save(student);
-        System.out.println("course registered !");
+
 
         return student;
     }
@@ -101,11 +102,14 @@ public class StudentService implements IStudentService {
         if (course == null) {
             throw new Exception("Course dose not exists!");
         }
-        student.removeCourse(course);
-        course.decrementNumOfStu();
-        database.getMapper().save(student);
-        database.getMapper().save(course);
-        System.out.println("registered course removed !");
+        if (student.isCourseRegistered(course)) {
+            student.removeCourse(course);
+            course.decrementNumOfStu();
+            database.getMapper().save(student);
+            database.getMapper().save(course);
+            System.out.println("registered course removed !");
+        }
+
         return student;
     }
 

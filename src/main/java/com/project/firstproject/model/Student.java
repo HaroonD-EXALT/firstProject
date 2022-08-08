@@ -104,10 +104,11 @@ public class Student {
     }
 
     public boolean isCourseRegistered(Course course){
+
         Course c = this.getRegCourses().stream().filter(course1 -> course1.getId() == course.getId()).findFirst().orElse(null);
-        if (c!= null) {
-            return true;
+        if (c == null) {
+            return false;
         }
-        return false;
+        return true;
     }
 }
