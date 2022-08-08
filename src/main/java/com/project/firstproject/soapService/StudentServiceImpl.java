@@ -1,25 +1,21 @@
 package com.project.firstproject.soapService;
 
 import com.project.firstproject.IServiceRepo.IStudentService;
-import com.project.firstproject.database.AerospikeDatabase;
 import com.project.firstproject.model.Student;
-import com.project.firstproject.pojo.PojoStudent;
 import com.project.firstproject.restServices.StudentService;
-
-
 import javax.jws.WebService;
-import java.util.List;
+
+
 @WebService(endpointInterface = "com.project.firstproject.IServiceRepo.IStudentService")
 public class StudentServiceImpl implements IStudentService {
-    private AerospikeDatabase database= AerospikeDatabase.getInstance();
     private StudentService studentService = new StudentService();
     @Override
-    public PojoStudent getAllStudents() {
+    public Student[] getAllStudents() {
 
-        List<Student> students = studentService.getAllStudents();
-        PojoStudent pojoStudent = new PojoStudent();
-        pojoStudent.setStudents(students);
-        return pojoStudent;
+        Student[] students = studentService.getAllStudents();
+//        PojoStudent pojoStudent = new PojoStudent();
+//        pojoStudent.setStudents(students);
+        return students;
     }
 
     @Override

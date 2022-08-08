@@ -8,18 +8,23 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import java.util.UUID;
+import javax.xml.bind.annotation.XmlElement;
+
 @WebService
-@SOAPBinding(style = SOAPBinding.Style.DOCUMENT)
+@SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface IAdminService {
     @WebMethod()
-    public Object getAllAdmins() throws AerospikeException;
-    @WebMethod()
-    public Admin getAdminById(@WebParam UUID id) throws AerospikeException;
+    public Admin[] getAllAdmins() throws AerospikeException;
+
+    @WebMethod
+    public Admin getAdminById(long id) throws Exception;
+
     @WebMethod
     public boolean logIn(LoginModel login);
+
     @WebMethod
     public Admin addAdmin(Admin admin) throws AerospikeException;
+
     @WebMethod
     public Admin getAdminByName(String username);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface IStudentService {
 
-    public Object getAllStudents() throws AerospikeException;
+    public Student[] getAllStudents() throws AerospikeException;
     public Student getStudentById(long id) throws AerospikeException, Exception;
     public Student addStudent(Student student);
     public Student removeStudent(long id) throws AerospikeException, Exception;

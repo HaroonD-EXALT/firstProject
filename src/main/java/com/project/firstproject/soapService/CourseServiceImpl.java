@@ -1,27 +1,19 @@
 package com.project.firstproject.soapService;
 
 import com.project.firstproject.IServiceRepo.ICourseService;
-import com.project.firstproject.database.AerospikeDatabase;
 import com.project.firstproject.model.Course;
-import com.project.firstproject.pojo.PojoCourse;
 import com.project.firstproject.restServices.CourseService;
-
-
 import javax.jws.WebService;
-import java.util.List;
 
 @WebService(endpointInterface = "com.project.firstproject.IServiceRepo.ICourseService")
 public class CourseServiceImpl implements ICourseService {
-    private AerospikeDatabase database = AerospikeDatabase.getInstance();
     private CourseService courseService = new CourseService();
 
     @Override
-    public PojoCourse getAllCourses() {
+    public Course[] getAllCourses() {
 
-        List<Course> courseList = courseService.getAllCourses();
-        PojoCourse pojoCourse = new PojoCourse();
-        pojoCourse.setCourses(courseList);
-        return pojoCourse;
+        Course[] courseList = courseService.getAllCourses();
+        return courseList;
     }
 
     @Override
