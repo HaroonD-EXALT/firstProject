@@ -39,7 +39,7 @@ public class CourseService implements ICourseService {
     public Course getCourseById(long id) throws AerospikeException,Exception{
             Course course= database.getMapper().read(Course.class,id);
             if (course == null) {
-                throw new Exception("Course dose note exists!");
+                throw new Exception("Course does not exist!");
             }
             System.out.println(course);
             return course;

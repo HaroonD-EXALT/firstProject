@@ -48,7 +48,7 @@ public class StudentResource {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Student addStudent(@Valid @RequestBody Student student){
         System.err.println("post new Student");
         System.out.println(student);

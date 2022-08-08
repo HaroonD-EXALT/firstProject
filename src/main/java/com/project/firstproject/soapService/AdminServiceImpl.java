@@ -4,6 +4,7 @@ import com.project.firstproject.IServiceRepo.IAdminService;
 import com.project.firstproject.model.Admin;
 import com.project.firstproject.model.LoginModel;
 import com.project.firstproject.restServices.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -11,7 +12,9 @@ import javax.jws.WebService;
 
 @WebService(endpointInterface = "com.project.firstproject.IServiceRepo.IAdminService")
 public class AdminServiceImpl implements IAdminService {
-    private AdminService adminService = new AdminService();
+
+    @Autowired
+    private AdminService adminService;
 
     @Override
     public Admin[] getAllAdmins() {

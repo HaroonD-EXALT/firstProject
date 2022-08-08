@@ -3,11 +3,15 @@ package com.project.firstproject.soapService;
 import com.project.firstproject.IServiceRepo.ICourseService;
 import com.project.firstproject.model.Course;
 import com.project.firstproject.restServices.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.jws.WebService;
 
 @WebService(endpointInterface = "com.project.firstproject.IServiceRepo.ICourseService")
 public class CourseServiceImpl implements ICourseService {
-    private CourseService courseService = new CourseService();
+
+    @Autowired
+    private CourseService courseService;
 
     @Override
     public Course[] getAllCourses() {

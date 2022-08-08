@@ -27,7 +27,7 @@ public class CourseResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later");
         }
     }
 
@@ -48,7 +48,7 @@ public class CourseResource {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity addNewCourse(@Valid @RequestBody Course course) {
         try {
             Course courseAdd = courseService.insertCourse(course);
@@ -61,7 +61,7 @@ public class CourseResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later");
         }
     }
 
@@ -79,7 +79,7 @@ public class CourseResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
         }
     }
 }

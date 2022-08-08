@@ -34,7 +34,6 @@ public class AerospikeDatabase {
     public static AerospikeDatabase getInstance() {
         if (aerospikeClient == null) {
             database = new AerospikeDatabase();
-            return database;
         }
         return database;
 

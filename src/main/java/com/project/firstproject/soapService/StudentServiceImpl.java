@@ -3,12 +3,16 @@ package com.project.firstproject.soapService;
 import com.project.firstproject.IServiceRepo.IStudentService;
 import com.project.firstproject.model.Student;
 import com.project.firstproject.restServices.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.jws.WebService;
 
 
 @WebService(endpointInterface = "com.project.firstproject.IServiceRepo.IStudentService")
 public class StudentServiceImpl implements IStudentService {
-    private StudentService studentService = new StudentService();
+
+    @Autowired
+    private StudentService studentService;
     @Override
     public Student[] getAllStudents() {
 

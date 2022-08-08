@@ -12,6 +12,8 @@ public class LoginModel {
     @NotEmpty(message = "username is required, must not be empty")
     @NotBlank(message = "username is required, must not be blank")
     private String username;
+
+
     @NotNull(message = "password is required, must not be null")
     @NotEmpty(message = "password is required, must not be empty")
     @NotBlank(message = "password is required, must not be blank")

@@ -1,7 +1,12 @@
 package com.project.firstproject.model;
 
+import com.aerospike.mapper.annotations.AerospikeBin;
 import com.aerospike.mapper.annotations.AerospikeKey;
 import com.aerospike.mapper.annotations.AerospikeRecord;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +15,17 @@ import java.util.List;
 @AerospikeRecord(namespace = "test", set = "students")
 public class Student {
     @AerospikeKey
+    @AerospikeBin(name = "PK")
     private long id;
+
+    @NotNull(message = "name is required, must not be null")
+    @NotEmpty(message = "name is required, must not be empty")
+    @NotBlank(message = "name is required, must not be blank")
     private String name;
+
+
     private String role;
+
     private List<Course> regCourses;
 
     public Student() {
@@ -76,22 +89,25 @@ public class Student {
 
 
     public void addNewCourse(Course course) {
-        regCourses.add(course);
+
+        this.getRegCourses().add(course);
     }
 
     public void removeCourse(Course course) {
 
         if (isCourseRegistered(course)) {
-            Course c = regCourses.stream().filter(course1 -> course1.getId() == course.getId()).findFirst().orElse(null);
-            regCourses.remove(c);
+            Course c = this.getRegCourses().stream().filter(course1 -> course1.getId() == course.getId()).findFirst().orElse(null);
+            this.getRegCourses().remove(c);
 
             System.out.println("removed !");
         }
     }
 
     public boolean isCourseRegistered(Course course){
-        Course c = regCourses.stream().filter(course1 -> course1.getId() == course.getId()).findFirst().orElse(null);
-        if (c!= null) return  true;
+        Course c = this.getRegCourses().stream().filter(course1 -> course1.getId() == course.getId()).findFirst().orElse(null);
+        if (c!= null) {
+            return true;
+        }
         return false;
     }
 }

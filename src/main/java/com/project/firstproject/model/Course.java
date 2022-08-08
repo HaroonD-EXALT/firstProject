@@ -15,10 +15,12 @@ public class Course {
     @AerospikeBin(name = "PK")
     private long id;
 
+
     @NotNull(message = "name is required, must not be null")
     @NotEmpty(message = "name is required, must not be empty")
     @NotBlank(message = "name is required, must not be blank")
     private String name;
+
 
     private int numOfStudent;
 
