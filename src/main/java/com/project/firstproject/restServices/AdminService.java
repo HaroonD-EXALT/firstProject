@@ -56,6 +56,10 @@ public class AdminService implements IAdminService {
     @Override
     public boolean logIn(LoginModel login) {
         Admin admin = getAdminByName(login.getUsername());
+        //admin is not exists
+        if (admin == null){
+            return false;
+        }
         if (admin.getPassword().equals(login.getPassword())) {
             return true;
         }

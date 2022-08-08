@@ -27,7 +27,7 @@ public class StudentResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
         }
 
     }
@@ -44,7 +44,7 @@ public class StudentResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
         }
     }
 
@@ -68,7 +68,7 @@ public class StudentResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
         }
     }
 
@@ -83,7 +83,7 @@ public class StudentResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error!");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
         }
     }
     @PostMapping("/{stuId}/courses/{courseId}")
