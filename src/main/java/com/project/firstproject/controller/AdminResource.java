@@ -1,7 +1,7 @@
-package com.project.firstproject.resources;
+package com.project.firstproject.controller;
 
 import com.aerospike.client.AerospikeException;
-import com.project.firstproject.model.Admin;
+import com.project.firstproject.domain.Admin;
 import com.project.firstproject.model.LoginModel;
 import com.project.firstproject.restServices.AdminService;
 import org.springframework.http.HttpStatus;
@@ -25,11 +25,11 @@ public class AdminResource {
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
             ae.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error! => "+ae.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error! => " + ae.getMessage());
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later => "+ e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something wrong try again later => " + e.getMessage());
         }
     }
 
@@ -72,22 +72,33 @@ public class AdminResource {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginModel login) {
         //simple authentication, it should not be like this in real project ^_^
-        boolean isAuthenticated = adminService.logIn(login);
-        if (isAuthenticated) {
-            return ResponseEntity.status(HttpStatus.OK).body("successful login");
+        boolean isAuthenticated = false;
+        try {
+            isAuthenticated = adminService.logIn(login);
+            if (isAuthenticated) {
+                return ResponseEntity.status(HttpStatus.OK).body("successful login");
+
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("username or password is incorrect.");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("username or password is incorrect.");
+
     }
 
     @PostMapping("/create")
     public ResponseEntity<Object> addNewAdmin(@Valid @RequestBody Admin admin) {
         try {
-            Admin addAdmin = adminService.addAdmin(admin);
-            return ResponseEntity.ok(addAdmin);
+            Admin addedAdmin = adminService.addAdmin(admin);
+            return ResponseEntity.ok(addedAdmin);
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
             ae.printStackTrace();
-            return ResponseEntity.internalServerError().body("Database Error, something wrong! ");
+            return ResponseEntity.internalServerError().body("Database Error," + ae.getMessage());
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -95,5 +106,23 @@ public class AdminResource {
         }
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteAdmin(@PathVariable("id") long id) {
+        try {
+            Admin admin = adminService.removeAdmin(id);
+            return ResponseEntity.ok(admin);
+
+        } catch (AerospikeException ae) {
+            System.err.println(ae.getMessage());
+            ae.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error!");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 
 }

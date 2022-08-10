@@ -1,8 +1,11 @@
-package com.project.firstproject.database;
+package com.project.firstproject.configuration;
 
 import com.aerospike.client.AerospikeClient;
+import com.aerospike.client.Language;
+import com.aerospike.client.policy.Policy;
 import com.aerospike.client.policy.WritePolicy;
 import com.aerospike.client.query.Statement;
+import com.aerospike.client.task.RegisterTask;
 import com.aerospike.mapper.tools.AeroMapper;
 
 
@@ -22,6 +25,8 @@ public class AerospikeDatabase {
         return aerospikeClient;
     }
 
+    String UDFDir = "./udf";
+    String GETNAME_UDFFile = "get_admin_by_name.lua";
 
     private AerospikeDatabase() {
         aerospikeClient = new AerospikeClient("localhost", 3000);
@@ -29,6 +34,9 @@ public class AerospikeDatabase {
         stmt = new Statement();
         stmt.setNamespace(NAMESPACE);
         mapper = new AeroMapper.Builder(aerospikeClient).build();
+
+        RegisterTask task = aerospikeClient.register(new Policy(), UDFDir+"/"+ GETNAME_UDFFile, GETNAME_UDFFile, Language.LUA);
+        task.waitTillComplete();
     }
 
     public static AerospikeDatabase getInstance() {

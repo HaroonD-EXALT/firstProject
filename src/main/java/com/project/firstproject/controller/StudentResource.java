@@ -1,7 +1,7 @@
-package com.project.firstproject.resources;
+package com.project.firstproject.controller;
 
 import com.aerospike.client.AerospikeException;
-import com.project.firstproject.model.Student;
+import com.project.firstproject.domain.Student;
 import com.project.firstproject.restServices.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -97,7 +97,7 @@ public class StudentResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error!");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -112,7 +112,7 @@ public class StudentResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error!");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage() );
         }
     }
 

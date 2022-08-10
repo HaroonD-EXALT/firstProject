@@ -1,13 +1,13 @@
 package com.project.firstproject.soapService;
 
-import com.project.firstproject.IServiceRepo.ICourseService;
-import com.project.firstproject.model.Course;
+import com.project.firstproject.model.IService.ICourseService;
+import com.project.firstproject.domain.Course;
 import com.project.firstproject.restServices.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "com.project.firstproject.IServiceRepo.ICourseService")
+@WebService(endpointInterface = "com.project.firstproject.model.IService.ICourseService")
 public class CourseServiceImpl implements ICourseService {
 
     @Autowired

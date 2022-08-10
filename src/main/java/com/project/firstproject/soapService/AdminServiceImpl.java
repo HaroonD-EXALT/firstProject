@@ -1,16 +1,16 @@
 package com.project.firstproject.soapService;
 
-import com.project.firstproject.IServiceRepo.IAdminService;
-import com.project.firstproject.model.Admin;
+import com.aerospike.client.AerospikeException;
+import com.project.firstproject.model.IService.IAdminService;
+import com.project.firstproject.domain.Admin;
 import com.project.firstproject.model.LoginModel;
 import com.project.firstproject.restServices.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.jws.WebParam;
 import javax.jws.WebService;
 
 
-@WebService(endpointInterface = "com.project.firstproject.IServiceRepo.IAdminService")
+@WebService(endpointInterface = "com.project.firstproject.model.IService.IAdminService")
 public class AdminServiceImpl implements IAdminService {
 
     @Autowired
@@ -33,7 +33,7 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public boolean logIn(LoginModel login) {
+    public boolean logIn(LoginModel login) throws Exception {
         Admin admin=  adminService.getAdminByName(login.getUsername());
         if (admin == null) return false;
         if (admin.getPassword().equals(login.getPassword())){
@@ -48,7 +48,12 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public Admin getAdminByName(String username) {
+    public Admin getAdminByName(String username) throws Exception {
         return adminService.getAdminByName(username);
+    }
+
+    @Override
+    public Admin removeAdmin(long id) throws AerospikeException, Exception {
+        return adminService.removeAdmin(id);
     }
 }

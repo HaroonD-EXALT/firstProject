@@ -1,11 +1,11 @@
-package com.project.firstproject.IServiceRepo;
+package com.project.firstproject.model.IService;
 
 import com.aerospike.client.AerospikeException;
-import com.project.firstproject.model.Student;
+import com.project.firstproject.domain.Student;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import java.util.List;
+
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface IStudentService {

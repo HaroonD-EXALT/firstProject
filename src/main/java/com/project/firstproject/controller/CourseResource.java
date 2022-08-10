@@ -1,7 +1,7 @@
-package com.project.firstproject.resources;
+package com.project.firstproject.controller;
 
 import com.aerospike.client.AerospikeException;
-import com.project.firstproject.model.Course;
+import com.project.firstproject.domain.Course;
 import com.project.firstproject.restServices.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +79,7 @@ public class CourseResource {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something wrong " + e.getMessage() + " try again later");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

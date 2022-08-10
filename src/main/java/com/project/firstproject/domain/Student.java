@@ -1,4 +1,4 @@
-package com.project.firstproject.model;
+package com.project.firstproject.domain;
 
 import com.aerospike.mapper.annotations.AerospikeBin;
 import com.aerospike.mapper.annotations.AerospikeKey;

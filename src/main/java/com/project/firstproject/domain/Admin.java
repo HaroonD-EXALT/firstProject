@@ -1,4 +1,4 @@
-package com.project.firstproject.model;
+package com.project.firstproject.domain;
 
 import com.aerospike.mapper.annotations.AerospikeBin;
 import com.aerospike.mapper.annotations.AerospikeKey;
@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlElement;
 
 @ComponentScan
 @AerospikeRecord(namespace="test", set="admins")
