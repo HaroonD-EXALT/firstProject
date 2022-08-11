@@ -21,6 +21,7 @@ public class AdminDao implements Dao<Admin> {
         long id = this.getNextId();
         item.setId(id);
         item.setRole("admin");
+        item.setPrivateData("privateData");
         System.out.println(item);
         //save object in the database, if it fails throws AerospikeException, and it will be caught in the resource class
         database.getMapper().save(item);

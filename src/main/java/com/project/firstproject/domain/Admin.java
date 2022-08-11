@@ -3,6 +3,7 @@ package com.project.firstproject.domain;
 import com.aerospike.mapper.annotations.AerospikeBin;
 import com.aerospike.mapper.annotations.AerospikeKey;
 import com.aerospike.mapper.annotations.AerospikeRecord;
+import lombok.Data;
 import org.springframework.context.annotation.ComponentScan;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -27,6 +28,8 @@ public class Admin{
     @NotBlank(message = "password is required, must not be blank")
     private String password;
 
+    private String privateData;
+
     public Admin() {
     }
 
@@ -35,12 +38,14 @@ public class Admin{
         this.name = name;
         this.password = password;
         this.role = "admin";
+        this.privateData="privateData";
     }
 
     public Admin(long id, String name) {
         this.id = id;
         this.name = name;
         this.role = "admin";
+        this.privateData="privateData";
     }
 
     public long getId() {
@@ -76,12 +81,22 @@ public class Admin{
         this.password = password;
     }
 
+    public String getPrivateData() {
+        return privateData;
+    }
+
+    public void setPrivateData(String privateData) {
+        this.privateData = privateData;
+    }
+
     @Override
     public String toString() {
         return "Admin{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", role='" + role + '\'' +
                 ", password='" + password + '\'' +
+                ", privateData='" + privateData + '\'' +
                 '}';
     }
 }

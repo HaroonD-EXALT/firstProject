@@ -1,14 +1,22 @@
 package com.project.firstproject.controller;
 
 import com.aerospike.client.AerospikeException;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.project.firstproject.domain.Admin;
 import com.project.firstproject.model.LoginModel;
+import com.project.firstproject.model.dto.AdminDto;
 import com.project.firstproject.restServices.AdminService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -17,10 +25,18 @@ public class AdminResource {
 
     AdminService adminService = new AdminService();
 
+
+    private ModelMapper modelMapper = new ModelMapper();
+
+//    public AdminResource() {
+//        TypeMap<Admin, AdminDto> propertyMapper = this.modelMapper.createTypeMap(Admin.class, AdminDto.class);
+//    }
+
     @GetMapping
     public ResponseEntity<Object> getAllAdmins() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(adminService.getAllAdmins());
+            List<AdminDto> admins = Arrays.stream(adminService.getAllAdmins()).map(admin -> modelMapper.map(admin, AdminDto.class)).collect(Collectors.toList());
+            return ResponseEntity.status(HttpStatus.OK).body(admins);
 
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
@@ -37,7 +53,7 @@ public class AdminResource {
     public ResponseEntity getAdminById(@PathVariable("id") long id) {
         try {
             Admin admin = adminService.getAdminById(id);
-            return ResponseEntity.ok(admin);
+            return ResponseEntity.ok(modelMapper.map(admin,AdminDto.class));
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
             ae.printStackTrace();
@@ -55,7 +71,7 @@ public class AdminResource {
     public ResponseEntity getAdminByName(@PathVariable("name") String id) {
         try {
             Admin admin = adminService.getAdminByName(id);
-            return ResponseEntity.ok(admin);
+            return ResponseEntity.ok(modelMapper.map(admin,AdminDto.class));
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
             ae.printStackTrace();
@@ -94,7 +110,7 @@ public class AdminResource {
     public ResponseEntity<Object> addNewAdmin(@Valid @RequestBody Admin admin) {
         try {
             Admin addedAdmin = adminService.addAdmin(admin);
-            return ResponseEntity.ok(addedAdmin);
+            return ResponseEntity.ok(modelMapper.map(admin,AdminDto.class));
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
             ae.printStackTrace();
@@ -111,7 +127,7 @@ public class AdminResource {
     public ResponseEntity deleteAdmin(@PathVariable("id") long id) {
         try {
             Admin admin = adminService.removeAdmin(id);
-            return ResponseEntity.ok(admin);
+            return ResponseEntity.ok(modelMapper.map(admin,AdminDto.class));
 
         } catch (AerospikeException ae) {
             System.err.println(ae.getMessage());
