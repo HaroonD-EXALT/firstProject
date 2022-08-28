@@ -107,6 +107,9 @@ public class StudentResource {
             Student newStudent = studentService.deleteRegCourse(stuId,courseId);
             return ResponseEntity.ok(newStudent);
 
+
+
+
         } catch (AerospikeException ae) {
             ae.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error!");

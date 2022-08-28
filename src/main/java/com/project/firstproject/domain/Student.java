@@ -90,6 +90,13 @@ public class Student {
 
     public void removeCourse(Course course) {
 
+
+
+
+
+
+
+
         if (isCourseRegistered(course)) {
             Course c = this.getRegCourses().stream().filter(course1 -> course1.getId() == course.getId()).findFirst().orElse(null);
             this.getRegCourses().remove(c);

@@ -24,7 +24,14 @@ public class Course {
 
     private int numOfStudent;
 
+
+
+
+
     private String privateData;
+
+
+
 
 
     public Course() {
