@@ -26,26 +26,20 @@ public class Student {
 
     private String role;
 
+    private String privateData;
+
     private List<Course> regCourses;
 
     public Student() {
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", role='" + role + '\'' +
-                ", regCourses=" + regCourses +
-                '}';
-    }
 
     public Student(long id, String name, String role) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.regCourses = new ArrayList<>();
+        this.privateData="private Data";
     }
 
     public Student(long id, String name) {
@@ -53,6 +47,7 @@ public class Student {
         this.name = name;
         this.role = "student";
         this.regCourses = new ArrayList<>();
+        this.privateData="private Data";
     }
 
     public List<Course> getRegCourses() {
@@ -110,5 +105,16 @@ public class Student {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", role='" + role + '\'' +
+                ", privateData='" + privateData + '\'' +
+                ", regCourses=" + regCourses +
+                '}';
     }
 }

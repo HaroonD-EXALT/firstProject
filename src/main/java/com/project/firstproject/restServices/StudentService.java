@@ -56,6 +56,7 @@ public class StudentService implements IStudentService {
         }
         if (!student.isCourseRegistered(course)) {
             student.addNewCourse(course);
+            System.out.println(student);
             course.incrementNumOfStu();
             studentDao.save(student);
             courseDao.save(course);

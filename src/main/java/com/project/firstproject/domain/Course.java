@@ -24,6 +24,9 @@ public class Course {
 
     private int numOfStudent;
 
+    private String privateData;
+
+
     public Course() {
     }
 
@@ -31,6 +34,8 @@ public class Course {
         this.id = id;
         this.name = name;
         this.numOfStudent = 0;
+        this.privateData="private Data";
+
 
     }
 
@@ -68,6 +73,8 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", numOfStudent=" + numOfStudent +
+                ", privateData='" + privateData + '\'' +
                 '}';
     }
 }
